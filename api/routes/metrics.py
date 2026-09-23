@@ -21,6 +21,14 @@ def metrics_recuperation() -> dict[str, list[Metrics] | list[ScraperLog] | str]:
             "database_size": database_size
         }
 
+@router.get("/exploration")
+def metrics_recuperation() -> dict[str, list[Metrics] | list[ScraperLog] | str]:
+    with get_session() as session:
+        metrics = get_metrics_by_category(session, MetricCategory.EXPLORATION)
+    return {
+        "metrics": metrics
+    }
+
 @router.get("/")
 def metrics() -> dict[str, list[Metrics] | list[ScraperLog] | str]:
     with get_session() as session:
