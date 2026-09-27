@@ -136,7 +136,7 @@ def update_count_courses_by_specialite(session: Session) -> MetricsBase:
     ).all()
     metric = Metrics(
         type=MetricType.TABLE,
-        value={"value": [{"name": name, "count": count} for name, count in rows]},
+        value={"values": [{"key": name, "name": name, "value": count} for name, count in rows]},
         name="Nombre de courses par spécialité",
         category=MetricCategory.EXPLORATION,
     )
@@ -155,7 +155,7 @@ def update_count_courses_by_hippodrome(session: Session) -> MetricsBase:
     ).all()
     metric = Metrics(
         type=MetricType.TABLE,
-        value={"value": [{"code": code, "libelleLong": libelle, "count": count} for code, libelle, count in rows]},
+        value={"values": [{"key": code, "name": libelle, "value": count} for code, libelle, count in rows]},
         name="Nombre de courses par hippodrome",
         category=MetricCategory.EXPLORATION,
     )
@@ -174,7 +174,7 @@ def update_count_courses_by_country(session: Session) -> MetricsBase:
     ).all()
     metric = Metrics(
         type=MetricType.TABLE,
-        value={"value": [{"code": code, "libelle": libelle, "count": count} for code, libelle, count in rows]},
+        value={"value": [{"key": code, "name": libelle, "value": count} for code, libelle, count in rows]},
         name="Nombre de courses par pays",
         category=MetricCategory.EXPLORATION,
     )
