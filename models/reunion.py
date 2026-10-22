@@ -1,20 +1,21 @@
-from datetime import datetime
-from sqlmodel import Field, SQLModel, Relationship
-from sqlalchemy import Column, JSON
 from typing import TYPE_CHECKING
+
+from sqlmodel import Field, Relationship, SQLModel
+
+from models.base import StoredRaw
 
 if TYPE_CHECKING:
     from models.course import Course
     from models.programme import Programme
 
-class ReunionBase(SQLModel):
+
+class ReunionBase(StoredRaw):
     id: str = Field(max_length=14, primary_key=True)
-    raw: dict = Field(sa_column=Column(JSON))
-    created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
+
 
 class ReunionCreate(ReunionBase):
     programme_id: str
+
 
 class Reunion(ReunionBase, table=True):
     programme_id: str = Field(foreign_key="programme.id")

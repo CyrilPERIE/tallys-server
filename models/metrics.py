@@ -1,7 +1,8 @@
 from enum import Enum as PyEnum
 from sqlmodel import Field, SQLModel
 from sqlalchemy import JSON, Column, Enum
-from datetime import datetime
+
+from models.base import Timestamped
 
 '''
 TODO: Améliorer le modèle en ajoutant des colonnes
@@ -17,13 +18,11 @@ class MetricCategory(str, PyEnum):
     RECUPERATION = "recuperation"
     EXPLORATION = "exploration"
     
-class MetricsBase(SQLModel):
+class MetricsBase(Timestamped):
     name: str = Field(primary_key=True, unique=True)
     value: dict = Field(default={}, sa_column=Column(JSON))
     category: MetricCategory = Field(sa_column=Column(Enum(MetricCategory)))
     type: MetricType = Field(default=MetricType.COUNT, sa_column=Column(Enum(MetricType)))
-    created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
 
 class MetricsCreate(MetricsBase):
     name: str

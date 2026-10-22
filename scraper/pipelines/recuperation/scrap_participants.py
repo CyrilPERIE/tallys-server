@@ -1,4 +1,3 @@
-from models.participant import ParticipantCreate
 from pmu.endpoints import get_participants
 from service.utils.deps import get_session
 from service.course import get_active_courses_identifiers
@@ -25,4 +24,4 @@ def scrap_participants() -> None:
         for participant in participants:
             logger.info(f"scraping participant {participant['numPmu']} for {course_identifier}")
             with get_session() as session:
-                create_participant(ParticipantCreate(id=f"{str(course_identifier)}/P{participant['numPmu']}", raw=participant, course_id=str(course_identifier)), session)
+                create_participant(participant, str(course_identifier), session)

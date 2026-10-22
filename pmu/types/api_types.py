@@ -32,11 +32,11 @@ class RapportCourse(BaseModel):
     dateRapport: int
     favoris: bool
     grossePrise: bool
-    indicateurTendance: str
+    indicateurTendance: Optional[str] = None
     nomIndicateurTendance: Optional[str] = None
     numPmu1: int
-    permutation: int
-    rapport: float
+    permutation: Optional[int] = None
+    rapport: Optional[float] = None
     typePari: str
     typeRapport: str
 
@@ -185,9 +185,9 @@ class Participant(BaseModel):
     handicapPoids: Optional[int] = None
     indicateurInedit: bool
     jumentPleine: bool
-    musique: str
+    musique: Optional[str] = None
     nom: str
-    nomMere: str
+    nomMere: Optional[str] = None
     nomPere: str
     nomPereMere: Optional[str] = None
     nombreCourses: int
@@ -203,7 +203,7 @@ class Participant(BaseModel):
     proprietaire: str
     race: str
     reductionKilometrique: Optional[float] = None
-    robe: Libelle
+    robe: Optional[Libelle] = None
     sexe: str
     statut: str
     supplement: int

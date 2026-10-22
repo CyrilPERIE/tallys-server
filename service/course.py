@@ -19,3 +19,12 @@ def set_course_is_over(course_identifier: CourseIdentifier, session: Session) ->
     session.merge(course)
     session.commit()
     return course
+
+def get_course_between_dates(start_date: CourseIdentifier, end_date: CourseIdentifier, session: Session) -> List[Course]:
+    start_date_id = str(start_date)
+    end_date_id = str(end_date)
+    dates = []
+    for date in range(start_date_id, end_date_id):
+        dates.append(date)
+    courses = session.exec(select(Course).where(Course.id >= start_date_id, Course.id <= end_date_id)).all()
+    return courses

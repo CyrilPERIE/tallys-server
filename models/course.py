@@ -1,7 +1,8 @@
-from datetime import datetime
-from sqlmodel import Field, SQLModel, Relationship
-from sqlalchemy import Column, JSON
 from typing import TYPE_CHECKING
+
+from sqlmodel import Field, Relationship, SQLModel
+
+from models.base import StoredRaw
 
 if TYPE_CHECKING:
     from models.combinaison import Combinaison
@@ -9,18 +10,19 @@ if TYPE_CHECKING:
     from models.rapport import Rapport
     from models.reunion import Reunion
 
-class CourseBase(SQLModel):
+
+class CourseBase(StoredRaw):
     id: str = Field(max_length=16, primary_key=True)
-    raw: dict = Field(sa_column=Column(JSON))
     is_over: bool = Field(default=False)
-    created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
+
+
 class CourseCreate(CourseBase):
     reunion_id: str
 
+
 class Course(CourseBase, table=True):
-        reunion_id: str = Field(foreign_key="reunion.id")
-        reunion: "Reunion" = Relationship(back_populates="courses")
-        participants: list["Participant"] = Relationship(back_populates="course")
-        rapports: list["Rapport"] = Relationship(back_populates="course")
-        combinaisons: list["Combinaison"] = Relationship(back_populates="course")
+    reunion_id: str = Field(foreign_key="reunion.id")
+    reunion: "Reunion" = Relationship(back_populates="courses")
+    participants: list["Participant"] = Relationship(back_populates="course")
+    rapports: list["Rapport"] = Relationship(back_populates="course")
+    combinaisons: list["Combinaison"] = Relationship(back_populates="course")
