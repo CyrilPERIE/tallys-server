@@ -13,10 +13,12 @@ TODO: Améliorer le modèle en ajoutant des colonnes
 class MetricType(str, PyEnum):
     COUNT = "count"
     TABLE = "table"
-
+    DICT = "dict"
+    
 class MetricCategory(str, PyEnum):
     RECUPERATION = "recuperation"
     EXPLORATION = "exploration"
+    MODELISATION = "modelisation"
     
 class MetricsBase(Timestamped):
     name: str = Field(primary_key=True, unique=True)

@@ -52,21 +52,22 @@ def map_participant(raw: dict, course_id: str) -> ParticipantAggregate:
     ]
     eleveur = _text(sources["eleveur"])
 
-    return ParticipantAggregate(
-        rows=(
-            LinkedRow(
-                Cheval,
-                ChevalCreate(
-                    id=nom,
-                    nom=nom,
-                    sexe=_text(api.sexe),
-                    race=_text(api.race),
-                    nom_pere=_text(api.nomPere),
-                    nom_mere=_text(api.nomMere),
-                ),
+    cheval_row = (
+        LinkedRow(
+            Cheval,
+            ChevalCreate(
+                id=nom,
+                nom=nom,
+                sexe=_text(api.sexe),
+                race=_text(api.race),
+                nom_pere=_text(api.nomPere),
+                nom_mere=_text(api.nomMere),
             ),
-            *personne_rows,
         ),
+    ) if nom else ()
+
+    return ParticipantAggregate(
+        rows=(*cheval_row, *personne_rows),
         participant=ParticipantCreate(
             id=f"{course_id}/P{api.numPmu}",
             course_id=course_id,
@@ -100,10 +101,10 @@ def map_participant(raw: dict, course_id: str) -> ParticipantAggregate:
             gains_place=gains.gainsPlace,
             gains_annee_en_cours=gains.gainsAnneeEnCours,
             gains_annee_precedente=gains.gainsAnneePrecedente,
-            proprietaire_id=_text(api.proprietaire),
-            entraineur_id=_text(api.entraineur),
-            driver_id=_text(api.driver),
-            cheval_id=nom,
+            proprietaire_id=_text(api.proprietaire) or None,
+            entraineur_id=_text(api.entraineur) or None,
+            driver_id=_text(api.driver) or None,
+            cheval_id=nom or None,
             eleveur_id=eleveur or None,
             raw=raw,
         ),

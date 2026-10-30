@@ -44,10 +44,10 @@ class ParticipantBase(StoredRaw):
     gains_annee_en_cours: float = Field()
     gains_annee_precedente: float = Field()
 
-    proprietaire_id: str = Field(foreign_key="proprietaire.id")
-    entraineur_id: str = Field(foreign_key="entraineur.id")
-    driver_id: str = Field(foreign_key="driver.id")
-    cheval_id: str = Field(foreign_key="cheval.id")
+    proprietaire_id: str | None = Field(default=None, foreign_key="proprietaire.id")
+    entraineur_id: str | None = Field(default=None, foreign_key="entraineur.id")
+    driver_id: str | None = Field(default=None, foreign_key="driver.id")
+    cheval_id: str | None = Field(default=None, foreign_key="cheval.id")
     eleveur_id: str | None = Field(default=None, foreign_key="eleveur.id")
 
 
@@ -58,8 +58,8 @@ class ParticipantCreate(ParticipantBase):
 class Participant(ParticipantBase, table=True):
     course_id: str = Field(foreign_key="course.id")
     course: "Course" = Relationship(back_populates="participants")
-    proprietaire: Proprietaire = Relationship(back_populates="participants")
-    entraineur: Entraineur = Relationship(back_populates="participants")
-    driver: Driver = Relationship(back_populates="participants")
-    cheval: Cheval = Relationship(back_populates="participants")
-    eleveur: Eleveur = Relationship(back_populates="participants")
+    proprietaire: Proprietaire | None = Relationship(back_populates="participants")
+    entraineur: Entraineur | None = Relationship(back_populates="participants")
+    driver: Driver | None = Relationship(back_populates="participants")
+    cheval: Cheval | None = Relationship(back_populates="participants")
+    eleveur: Eleveur | None = Relationship(back_populates="participants")

@@ -1,4 +1,6 @@
 from typing import List
+
+from sqlalchemy.orm import selectinload
 from models.course import Course, CourseCreate
 from pmu.types.types import CourseIdentifier
 from utils.mapper import course_id_to_course_identifier
@@ -20,11 +22,10 @@ def set_course_is_over(course_identifier: CourseIdentifier, session: Session) ->
     session.commit()
     return course
 
-def get_course_between_dates(start_date: CourseIdentifier, end_date: CourseIdentifier, session: Session) -> List[Course]:
-    start_date_id = str(start_date)
-    end_date_id = str(end_date)
-    dates = []
-    for date in range(start_date_id, end_date_id):
-        dates.append(date)
-    courses = session.exec(select(Course).where(Course.id >= start_date_id, Course.id <= end_date_id)).all()
-    return courses
+def get_courses_by_year(year: int, session: Session) -> List[Course]:
+    courses = session.exec(
+        select(Course).where(Course.id.like(f"____{year}/%"))
+        .options(selectinload(Course.participants))
+
+    ).all()
+    return list(courses)

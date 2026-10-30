@@ -37,9 +37,9 @@ def _personne(class_name: str, relation: str, *, required: bool) -> PersonneLink
     return PersonneLink(relation, table, PersonneCreate, required=required)
 
 
-DRIVER = _personne("Driver", "driver", required=True)
-ENTRAINEUR = _personne("Entraineur", "entraineur", required=True)
-PROPRIETAIRE = _personne("Proprietaire", "proprietaire", required=True)
+DRIVER = _personne("Driver", "driver", required=False)
+ENTRAINEUR = _personne("Entraineur", "entraineur", required=False)
+PROPRIETAIRE = _personne("Proprietaire", "proprietaire", required=False)
 ELEVEUR = _personne("Eleveur", "eleveur", required=False)
 
 PERSONNES = (DRIVER, ENTRAINEUR, PROPRIETAIRE, ELEVEUR)

@@ -1,6 +1,7 @@
 import sys
 from api.routes import metrics
 from api.routes import scrap
+from api.routes import predict
 from fastapi import FastAPI
 from utils.logger import setup_logging
 import uvicorn
@@ -14,6 +15,7 @@ app = FastAPI()
 
 app.include_router(metrics.router)
 app.include_router(scrap.router)
+app.include_router(predict.router)
 
 @app.on_event('startup')
 def startup_event():
@@ -44,9 +46,13 @@ def every_day_event():
 '''
 '''TODO: Permettre le multi-threading pour la gestion asyncronne des requêtes et des pipelines.
 '''
-@app.get("/health")
+@app.get("/")
 async def read_root():
     return {"message": "ok"}
+
+@app.get("/json/version")
+async def read_version():
+    return {"version": "0.1.4", "status": "ok"}
 
 
 if __name__ == "__main__":

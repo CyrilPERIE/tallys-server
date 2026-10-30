@@ -64,10 +64,10 @@ COLUMNS = [
     _column("gains_place", sa.Float(), "COALESCE((raw::jsonb -> 'gainsParticipant' ->> 'gainsPlace')::double precision, 0)"),
     _column("gains_annee_en_cours", sa.Float(), "COALESCE((raw::jsonb -> 'gainsParticipant' ->> 'gainsAnneeEnCours')::double precision, 0)"),
     _column("gains_annee_precedente", sa.Float(), "COALESCE((raw::jsonb -> 'gainsParticipant' ->> 'gainsAnneePrecedente')::double precision, 0)"),
-    _column("proprietaire_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'proprietaire'), '')", references="proprietaire"),
-    _column("entraineur_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'entraineur'), '')", references="entraineur"),
-    _column("driver_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'driver'), '')", references="driver"),
-    _column("cheval_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'nom'), '')", references="cheval"),
+    _column("proprietaire_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'proprietaire'), '')", nullable=True, references="proprietaire"),
+    _column("entraineur_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'entraineur'), '')", nullable=True, references="entraineur"),
+    _column("driver_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'driver'), '')", nullable=True, references="driver"),
+    _column("cheval_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'nom'), '')", nullable=True, references="cheval"),
     _column("eleveur_id", sa.String(), "NULLIF(btrim(raw::jsonb ->> 'eleveur'), '')", nullable=True, references="eleveur"),
 ]
 

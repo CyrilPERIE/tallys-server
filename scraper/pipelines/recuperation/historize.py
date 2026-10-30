@@ -1,7 +1,7 @@
 import datetime
 from pmu.types.types import ProgrammeIdentifier
 from pmu.constants import MIN_DATE
-from pmu.utils import date_to_programme_date
+from pmu.dates import date_to_programme_date
 from scraper.pipelines.recuperation.scrap_past_programmes import scrap_past_programmes
 from scraper.pipelines.utils.pipeline_decorator import log_scraper
 

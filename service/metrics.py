@@ -152,5 +152,5 @@ def update_count_courses_by_country(session: Session) -> MetricsBase:
         "value",
     )
 
-def update_matrix_spearman(session: Session) -> MetricsBase:
-    return
+def update_model_evaluation_metircs(session: Session, name: str, value: dict) -> MetricsBase:
+    return _save(session, name, value, MetricCategory.MODELISATION, MetricType.DICT)
